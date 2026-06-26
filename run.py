@@ -1,3 +1,4 @@
+import os
 import click
 from flask import Flask
 from app.config import SECRET_KEY
@@ -7,9 +8,10 @@ from app.routes.series import series_bp
 from app.routes.exportar import exportar_bp
 
 def create_app():
+    base_dir = os.path.dirname(os.path.abspath(__file__))
     app = Flask(__name__,
-                static_folder='static',
-                template_folder='templates')
+                static_folder=os.path.join(base_dir, 'app', 'static'),
+                template_folder=os.path.join(base_dir, 'app', 'templates'))
     app.secret_key = SECRET_KEY
 
     app.register_blueprint(principal_bp)
