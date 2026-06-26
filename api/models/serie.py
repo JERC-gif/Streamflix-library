@@ -1,9 +1,9 @@
-from app.services.database import get_connection
+from api.services.database import get_connection
 
 def obtener_todas():
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT id, nombre, anio, calificacion, fecha_terminado FROM series ORDER BY anio;")
+    cur.execute("SELECT id, nombre, anio, calificacion, fecha_terminado, imagen IS NOT NULL as tiene_imagen FROM series ORDER BY anio;")
     series = cur.fetchall()
     cur.close()
     conn.close()
@@ -21,7 +21,7 @@ def obtener_anios():
 def obtener_por_id(id):
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT id, nombre, anio, calificacion, fecha_terminado FROM series WHERE id=%s;", (id,))
+    cur.execute("SELECT id, nombre, anio, calificacion, fecha_terminado, imagen IS NOT NULL as tiene_imagen FROM series WHERE id=%s;", (id,))
     serie = cur.fetchone()
     cur.close()
     conn.close()
@@ -69,3 +69,34 @@ def contar():
     cur.close()
     conn.close()
     return count
+
+def guardar_imagen(id, imagen_bytes):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("UPDATE series SET imagen=%s WHERE id=%s;", (imagen_bytes, id))
+    conn.commit()
+    cur.close()
+    conn.close()
+
+def obtener_imagen(id):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT imagen FROM series WHERE id=%s;", (id,))
+    result = cur.fetchone()
+    cur.close()
+    conn.close()
+    return result[0] if result else None
+
+def buscar(query):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT id, nombre, anio, calificacion, fecha_terminado 
+        FROM series 
+        WHERE nombre ILIKE %s
+        ORDER BY nombre;
+    """, (f'%{query}%',))
+    series = cur.fetchall()
+    cur.close()
+    conn.close()
+    return series

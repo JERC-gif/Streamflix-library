@@ -1,8 +1,7 @@
 import csv
 import json
 from io import StringIO
-from flask import Response
-from app.services.database import get_connection
+from api.services.database import get_connection
 
 def exportar_peliculas_csv():
     conn = get_connection()
@@ -17,11 +16,7 @@ def exportar_peliculas_csv():
     writer.writerow(['ID', 'Nombre', 'Año', 'Calificación', 'Fecha vista'])
     writer.writerows(peliculas)
 
-    return Response(
-        output.getvalue(),
-        mimetype='text/csv',
-        headers={'Content-Disposition': 'attachment; filename=peliculas_exportadas.csv'}
-    )
+    return output.getvalue()
 
 def exportar_series_csv():
     conn = get_connection()
@@ -36,11 +31,7 @@ def exportar_series_csv():
     writer.writerow(['ID', 'Nombre', 'Año', 'Calificación', 'Fecha terminada'])
     writer.writerows(series)
 
-    return Response(
-        output.getvalue(),
-        mimetype='text/csv',
-        headers={'Content-Disposition': 'attachment; filename=series_exportadas.csv'}
-    )
+    return output.getvalue()
 
 def exportar_todo_csv():
     conn = get_connection()
@@ -65,11 +56,7 @@ def exportar_todo_csv():
     for serie in series:
         writer.writerow(['Serie'] + list(serie))
 
-    return Response(
-        output.getvalue(),
-        mimetype='text/csv',
-        headers={'Content-Disposition': 'attachment; filename=biblioteca_completa.csv'}
-    )
+    return output.getvalue()
 
 def exportar_peliculas_json():
     conn = get_connection()
@@ -89,11 +76,7 @@ def exportar_peliculas_json():
             'fecha_vista': str(p[4]) if p[4] else None
         })
 
-    return Response(
-        json.dumps(data, indent=2, ensure_ascii=False),
-        mimetype='application/json',
-        headers={'Content-Disposition': 'attachment; filename=peliculas_exportadas.json'}
-    )
+    return json.dumps(data, indent=2, ensure_ascii=False)
 
 def exportar_series_json():
     conn = get_connection()
@@ -113,11 +96,7 @@ def exportar_series_json():
             'fecha_terminado': str(s[4]) if s[4] else None
         })
 
-    return Response(
-        json.dumps(data, indent=2, ensure_ascii=False),
-        mimetype='application/json',
-        headers={'Content-Disposition': 'attachment; filename=series_exportadas.json'}
-    )
+    return json.dumps(data, indent=2, ensure_ascii=False)
 
 def exportar_todo_json():
     conn = get_connection()
@@ -152,8 +131,4 @@ def exportar_todo_json():
             'fecha_terminado': str(s[4]) if s[4] else None
         })
 
-    return Response(
-        json.dumps(data, indent=2, ensure_ascii=False),
-        mimetype='application/json',
-        headers={'Content-Disposition': 'attachment; filename=biblioteca_completa.json'}
-    )
+    return json.dumps(data, indent=2, ensure_ascii=False)
