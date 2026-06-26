@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="section-title">Editar Película</h2>
+    
+    <div class="form-section">
+        <form method="POST" action="{{ url_for('editar_pelicula', id=pelicula[0]) }}">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" value="{{ pelicula[1] }}" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="anio">Año:</label>
+                    <input type="number" id="anio" name="anio" min="1900" max="2100" value="{{ pelicula[2] if pelicula[2] else '' }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="calificacion">Calificación (0-10):</label>
+                    <input type="number" id="calificacion" name="calificacion" min="0" max="10" step="0.1" value="{{ pelicula[3] if pelicula[3] else '' }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="fecha_vista">Fecha vista:</label>
+                    <input type="date" id="fecha_vista" name="fecha_vista" value="{{ pelicula[4] if pelicula[4] else '' }}">
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <a href="{{ url_for('peliculas') }}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

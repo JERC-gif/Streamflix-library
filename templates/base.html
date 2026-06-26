@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Películas y Series</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+        <header>
+            <div class="header-content">
+                <a href="{{ url_for('index') }}" class="logo">
+                    <div class="logo-icon"></div>
+                    <span class="logo-text">StreamFlix</span>
+                </a>
+                
+                <div class="search-container">
+                    <form action="{{ url_for('buscar') }}" method="GET" class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" name="q" class="search-input" placeholder="Buscar películas, series..." required>
+                        <button type="submit" class="search-btn">Buscar</button>
+                    </form>
+                </div>
+                
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="{{ url_for('index') }}" class="nav-link {% if request.path == '/' %}active{% endif %}">Inicio</a></li>
+                        <li><a href="{{ url_for('peliculas') }}" class="nav-link {% if request.path == '/peliculas' %}active{% endif %}">Películas</a></li>
+                        <li><a href="{{ url_for('series') }}" class="nav-link {% if request.path == '/series' %}active{% endif %}">Series</a></li>
+                        <li><a href="{{ url_for('exportar') }}" class="nav-link {% if request.path == '/exportar' %}active{% endif %}">Exportar</a></li>
+                        <li>
+                            <button id="themeToggle" class="theme-toggle" title="Cambiar tema">
+                                🌙
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <div class="main-content">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="flash {{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Gestor de Películas y Series - Diseño Premium</p>
+            </div>
+        </footer>
+
+    <!-- Contenedor de notificaciones toast -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

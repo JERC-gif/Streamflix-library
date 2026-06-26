@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="section-title">Gestión de Series</h2>
+    
+    <div class="form-section" id="agregar">
+        <h3 class="subtitle">Agregar Nueva Serie</h3>
+        <form method="POST" action="{{ url_for('agregar_serie') }}">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Ej: Stranger Things">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="anio">Año:</label>
+                    <input type="number" id="anio" name="anio" min="1900" max="2100" placeholder="Ej: 2024">
+                </div>
+                
+                <div class="form-group">
+                    <label for="calificacion">Calificación (0-10):</label>
+                    <input type="number" id="calificacion" name="calificacion" min="0" max="10" step="0.1" placeholder="Ej: 8.5">
+                </div>
+                
+                <div class="form-group">
+                    <label for="fecha_terminado">Fecha terminada:</label>
+                    <input type="date" id="fecha_terminado" name="fecha_terminado">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Agregar Serie</button>
+        </form>
+    </div>
+    
+    <div class="table-section">
+        <h3 class="subtitle">Lista de Series</h3>
+        
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Buscar series..." id="searchSeries">
+            <div class="search-filters">
+                <select class="filter-select" data-filter="rating" id="filterRating">
+                    <option value="">Todas las calificaciones</option>
+                    <option value="high">Alta (8-10)</option>
+                    <option value="medium">Media (5-7.9)</option>
+                    <option value="low">Baja (0-4.9)</option>
+                </select>
+                <select class="filter-select" data-filter="year" id="filterYear">
+                    <option value="">Todos los años</option>
+                    {% for año in años %}
+                        <option value="{{ año }}">{{ año }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        {% if series %}
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Año</th>
+                            <th>Calificación</th>
+                            <th>Fecha terminada</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for serie in series %}
+                        <tr>
+                            <td>{{ serie[0] }}</td>
+                            <td>{{ serie[1] }}</td>
+                            <td>{{ serie[2] if serie[2] else '-' }}</td>
+                            <td>
+                                <div class="rating-container">
+                                    {{ serie[3] if serie[3] else '-' }}
+                                </div>
+                            </td>
+                            <td>{{ serie[4] if serie[4] else '-' }}</td>
+                            <td class="actions-cell">
+                                <a href="{{ url_for('editar_serie', id=serie[0]) }}" class="btn btn-small btn-secondary">Editar</a>
+                                <form method="POST" action="{{ url_for('eliminar_serie', id=serie[0]) }}" class="delete-form" style="display: inline;">
+                                    <button type="submit" class="btn btn-small btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta serie?')">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="no-data">No hay series registradas.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

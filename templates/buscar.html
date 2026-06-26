@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="section-title">Resultados de búsqueda: "{{ query }}"</h2>
+    
+    <div class="table-section">
+        {% if resultados %}
+            <p class="search-count">{{ resultados|length }} resultado(s) encontrado(s)</p>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Nombre</th>
+                            <th>Año</th>
+                            <th>Calificación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for resultado in resultados %}
+                        <tr>
+                            <td>
+                                <span class="badge {% if resultado[0] == 'pelicula' %}badge-pelicula{% else %}badge-serie{% endif %}">
+                                    {{ resultado[0]|capitalize }}
+                                </span>
+                            </td>
+                            <td>{{ resultado[2] }}</td>
+                            <td>{{ resultado[3] if resultado[3] else '-' }}</td>
+                            <td>{{ resultado[4] if resultado[4] else '-' }}</td>
+                            <td>
+                                {% if resultado[0] == 'pelicula' %}
+                                    <a href="{{ url_for('editar_pelicula', id=resultado[1]) }}" class="btn btn-small">Editar</a>
+                                {% else %}
+                                    <a href="{{ url_for('editar_serie', id=resultado[1]) }}" class="btn btn-small">Editar</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="no-data">No se encontraron resultados para "{{ query }}"</p>
+        {% endif %}
+        
+        <div class="search-actions">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Volver al inicio</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
