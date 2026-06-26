@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Sección de bienvenida -->
 <div class="content-section">
     <div class="welcome-section">
         <h1 class="welcome-title">¡Bienvenido a StreamFlix Premium!</h1>
@@ -9,7 +8,6 @@
     </div>
 </div>
 
-<!-- Sección de estadísticas -->
 <div class="content-section">
     <h2 class="section-title">📊 Estadísticas de tu Biblioteca</h2>
     <div class="stats-grid">
@@ -21,7 +19,7 @@
             <div class="stat-value">{{ peliculas_count }}</div>
             <div class="stat-subtitle">Películas registradas</div>
         </div>
-        
+
         <div class="stat-card">
             <div class="stat-header">
                 <span class="stat-title">Total Series</span>
@@ -30,7 +28,7 @@
             <div class="stat-value">{{ series_count }}</div>
             <div class="stat-subtitle">Series registradas</div>
         </div>
-        
+
         <div class="stat-card">
             <div class="stat-header">
                 <span class="stat-title">Total Contenido</span>
@@ -39,7 +37,7 @@
             <div class="stat-value">{{ peliculas_count + series_count }}</div>
             <div class="stat-subtitle">Elementos en tu biblioteca</div>
         </div>
-        
+
         <div class="stat-card">
             <div class="stat-header">
                 <span class="stat-title">Calificación Promedio</span>
@@ -51,34 +49,32 @@
     </div>
 </div>
 
-<!-- Acciones rápidas -->
 <div class="content-section">
     <h2 class="section-title">🚀 Acciones Rápidas</h2>
     <div class="quick-actions">
-        <a href="{{ url_for('peliculas') }}" class="action-card">
+        <a href="{{ url_for('peliculas.listar') }}" class="action-card">
             <div class="action-icon">🎬</div>
             <h3>Gestionar Películas</h3>
             <p>Agregar, ver y editar tus películas</p>
             <span class="action-count">{{ peliculas_count }} películas</span>
         </a>
-        
-        <a href="{{ url_for('series') }}" class="action-card">
+
+        <a href="{{ url_for('series.listar') }}" class="action-card">
             <div class="action-icon">📺</div>
             <h3>Gestionar Series</h3>
             <p>Agregar, ver y editar tus series</p>
             <span class="action-count">{{ series_count }} series</span>
         </a>
-        
-        <a href="{{ url_for('exportar') }}" class="action-card">
+
+        <a href="{{ url_for('exportar.index') }}" class="action-card">
             <div class="action-icon">📤</div>
             <h3>Exportar Datos</h3>
             <p>Descargar tu biblioteca completa</p>
-            <span class="action-count">CSV disponible</span>
+            <span class="action-count">CSV/JSON disponible</span>
         </a>
     </div>
 </div>
 
-<!-- Información adicional -->
 <div class="content-section">
     <div class="info-grid">
         <div class="info-card">
@@ -90,14 +86,14 @@
                 <li>Mantén actualizada tu calificación</li>
             </ul>
         </div>
-        
+
         <div class="info-card">
             <h3>🎯 Funciones Destacadas</h3>
             <ul>
                 <li>Búsqueda en tiempo real</li>
                 <li>Filtros avanzados por calificación y año</li>
                 <li>Visualización de calificaciones con estrellas</li>
-                <li>Exportación de datos en CSV</li>
+                <li>Exportación de datos en CSV y JSON</li>
                 <li>Diseño responsive para móviles</li>
             </ul>
         </div>

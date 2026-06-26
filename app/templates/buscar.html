@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <h2 class="section-title">Resultados de búsqueda: "{{ query }}"</h2>
-    
+
     <div class="table-section">
         {% if resultados %}
             <p class="search-count">{{ resultados|length }} resultado(s) encontrado(s)</p>
@@ -31,9 +31,9 @@
                             <td>{{ resultado[4] if resultado[4] else '-' }}</td>
                             <td>
                                 {% if resultado[0] == 'pelicula' %}
-                                    <a href="{{ url_for('editar_pelicula', id=resultado[1]) }}" class="btn btn-small">Editar</a>
+                                    <a href="{{ url_for('peliculas.editar', id=resultado[1]) }}" class="btn btn-small">Editar</a>
                                 {% else %}
-                                    <a href="{{ url_for('editar_serie', id=resultado[1]) }}" class="btn btn-small">Editar</a>
+                                    <a href="{{ url_for('series.editar', id=resultado[1]) }}" class="btn btn-small">Editar</a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -44,9 +44,9 @@
         {% else %}
             <p class="no-data">No se encontraron resultados para "{{ query }}"</p>
         {% endif %}
-        
+
         <div class="search-actions">
-            <a href="{{ url_for('index') }}" class="btn btn-secondary">Volver al inicio</a>
+            <a href="{{ url_for('principal.index') }}" class="btn btn-secondary">Volver al inicio</a>
         </div>
     </div>
 </div>

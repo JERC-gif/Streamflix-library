@@ -18,7 +18,7 @@ Una aplicación web moderna y elegante para gestionar tu biblioteca personal de 
 - **Indicadores Visuales**: Barras de progreso para calificaciones
 - **Notificaciones Toast**: Sistema de alertas elegante
 - **Dashboard Interactivo**: Estadísticas y gráficos visuales
-- **Exportación CSV**: Exportar datos en formato CSV
+- **Exportación CSV/JSON**: Exportar datos en múltiples formatos
 
 ### Dashboard Mejorado
 - **Estadísticas en Tiempo Real**: Contadores dinámicos
@@ -51,54 +51,79 @@ Una aplicación web moderna y elegante para gestionar tu biblioteca personal de 
 - Auto-dismiss con animaciones
 
 ### 5. Exportación de Datos
-- Exportar películas a CSV
-- Exportar series a CSV
+- Exportar películas a CSV y JSON
+- Exportar series a CSV y JSON
 - Exportar toda la biblioteca
+
+## Arquitectura Modular
+
+El proyecto sigue una arquitectura modular con separación de responsabilidades:
+
+```
+app/
+├── __init__.py              # Package principal
+├── config.py                # Configuración y variables de entorno
+├── routes/                  # Blueprints de Flask
+│   ├── __init__.py
+│   ├── principal.py         # Rutas principales (index, búsqueda)
+│   ├── peliculas.py         # CRUD de películas
+│   ├── series.py            # CRUD de series
+│   └── exportar.py          # Exportación CSV/JSON
+├── models/                  # Modelos de datos
+│   ├── __init__.py
+│   ├── pelicula.py          # Lógica de películas
+│   └── serie.py             # Lógica de series
+├── services/                # Servicios de negocio
+│   ├── __init__.py
+│   ├── database.py          # Conexión a PostgreSQL
+│   └── export.py            # Servicios de exportación
+├── static/                  # Archivos estáticos
+│   ├── css/
+│   │   └── style.css        # Estilos premium
+│   └── js/
+│       └── script.js        # Funcionalidades JavaScript
+└── templates/               # Templates Jinja2
+    ├── base.html            # Plantilla base con navegación
+    ├── index.html           # Dashboard principal
+    ├── buscar.html          # Resultados de búsqueda
+    ├── peliculas/           # Templates de películas
+    │   ├── listar.html
+    │   └── editar.html
+    ├── series/              # Templates de series
+    │   ├── listar.html
+    │   └── editar.html
+    └── exportar/            # Templates de exportación
+        └── index.html
+```
 
 ## Tecnologías Utilizadas
 
 - **HTML5**: Estructura semántica
 - **CSS3**: Variables CSS, Grid, Flexbox, Animaciones
 - **JavaScript**: Funcionalidades interactivas
-- **Flask**: Backend en Python
+- **Flask**: Backend en Python con Blueprints
 - **PostgreSQL**: Base de datos relacional
 - **python-dotenv**: Variables de entorno
-
-## Estructura de Archivos
-
-```
-Gestor de Películas y Series/
-├── templates/
-│   ├── base.html              # Plantilla base con navegación
-│   ├── index.html             # Dashboard principal
-│   ├── peliculas.html         # Gestión de películas
-│   ├── series.html            # Gestión de series
-│   ├── exportar.html          # Exportación de datos
-│   ├── editar_pelicula.html   # Formulario edición película
-│   ├── editar_serie.html      # Formulario edición serie
-│   └── buscar.html            # Resultados de búsqueda
-├── static/
-│   ├── style.css              # Estilos premium
-│   └── script.js              # Funcionalidades JavaScript
-├── app.py                     # Aplicación Flask
-├── db.py                      # Conexión a base de datos
-├── series.py                  # Lógica de series
-├── exportar.py                # Lógica de exportación
-├── init_db.sql                # Script inicial de base de datos
-├── .env                       # Variables de entorno (no subir a git)
-├── .env.example               # Ejemplo de variables de entorno
-├── .gitignore                 # Archivos ignorados por git
-└── requirements.txt           # Dependencias de Python
-```
+- **click**: Interfaz de línea de comandos
 
 ## Instalación y Uso
 
 1. Clona el repositorio
 2. Crea un archivo `.env` basado en `.env.example`
-3. Instala las dependencias: `pip install -r requirements.txt`
+3. Instala las dependencias: `pip3 install -r requirements.txt`
 4. Ejecuta el script SQL: `psql -U postgres -d Pelis -f init_db.sql`
-5. Ejecuta la aplicación: `python app.py`
+5. Ejecuta la aplicación: `python3 run.py`
 6. Abre tu navegador en `http://localhost:5002`
+
+### Opciones de línea de comandos
+
+```bash
+# Ejecutar con opciones personalizadas
+python3 run.py --host 0.0.0.0 --port 8080 --no-debug
+
+# Ver ayuda
+python3 run.py --help
+```
 
 ## Configuración de Base de datos
 

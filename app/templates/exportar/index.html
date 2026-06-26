@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <h2 class="section-title">📤 Exportar Datos</h2>
-    
+
     <div class="export-options">
         <div class="export-card">
             <div class="export-header">
@@ -17,17 +17,17 @@
                 </span>
             </div>
             <div class="export-actions">
-                <a href="{{ url_for('exportar_peliculas') }}" class="btn btn-primary">
+                <a href="{{ url_for('exportar.peliculas_csv') }}" class="btn btn-primary">
                     <span class="btn-icon">📄</span>
                     Exportar CSV
                 </a>
-                <button class="btn btn-secondary" onclick="showToast('Función JSON próximamente', 'info')">
+                <a href="{{ url_for('exportar.peliculas_json') }}" class="btn btn-secondary">
                     <span class="btn-icon">🔧</span>
                     Exportar JSON
-                </button>
+                </a>
             </div>
         </div>
-        
+
         <div class="export-card">
             <div class="export-header">
                 <span class="export-icon">📺</span>
@@ -40,17 +40,17 @@
                 </span>
             </div>
             <div class="export-actions">
-                <a href="{{ url_for('exportar_series') }}" class="btn btn-primary">
+                <a href="{{ url_for('exportar.series_csv') }}" class="btn btn-primary">
                     <span class="btn-icon">📄</span>
                     Exportar CSV
                 </a>
-                <button class="btn btn-secondary" onclick="showToast('Función JSON próximamente', 'info')">
+                <a href="{{ url_for('exportar.series_json') }}" class="btn btn-secondary">
                     <span class="btn-icon">🔧</span>
                     Exportar JSON
-                </button>
+                </a>
             </div>
         </div>
-        
+
         <div class="export-card">
             <div class="export-header">
                 <span class="export-icon">📊</span>
@@ -63,18 +63,18 @@
                 </span>
             </div>
             <div class="export-actions">
-                <a href="{{ url_for('exportar_todo') }}" class="btn btn-primary">
+                <a href="{{ url_for('exportar.todo_csv') }}" class="btn btn-primary">
                     <span class="btn-icon">📄</span>
                     Exportar CSV
                 </a>
-                <button class="btn btn-secondary" onclick="showToast('Función JSON próximamente', 'info')">
+                <a href="{{ url_for('exportar.todo_json') }}" class="btn btn-secondary">
                     <span class="btn-icon">🔧</span>
                     Exportar JSON
-                </button>
+                </a>
             </div>
         </div>
     </div>
-    
+
     <div class="export-info">
         <div class="info-card">
             <h3>💡 Información sobre Exportación</h3>
@@ -85,7 +85,7 @@
                 <li>Puedes usar estos archivos para hacer respaldos o análisis externos</li>
             </ul>
         </div>
-        
+
         <div class="info-card">
             <h3>🔒 Privacidad y Seguridad</h3>
             <ul>
